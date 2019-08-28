@@ -1,15 +1,16 @@
 import mongoose = require('mongoose');
-import { Schema } from 'mongoose';
-import ToolsSchema from '../schemas/ToolsSchema'
+import {ToolsSchema} from '../schemas/ToolsSchema'
+
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    _id: {type: String, required: true},
+    _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
     email: {type: String, required: true},
-    senha: {type: String, required: true},
+    password: {type: String, required: true},
     username: {type: String, required: true},
     tools: [ ToolsSchema ]
 });
 
-const usarModel = mongoose.model('user', UserSchema);
+const userModel = mongoose.model('user', UserSchema);
 
-export default usarModel;
+export default userModel;

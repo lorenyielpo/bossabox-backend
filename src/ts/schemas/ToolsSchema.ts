@@ -1,8 +1,9 @@
 import mongoose = require('mongoose');
-import { Schema } from 'mongoose';
+
+const Schema = mongoose.Schema;
 
 const ToolsSchema = new Schema({
-    _id: {type: String, required: true},
+    _id: {type: mongoose.Schema.Types.ObjectId, auto: true},
     title: {type: String, required: true},
     description: {type: String, required: true},
     tags: {type: Array, required: true},
@@ -10,4 +11,4 @@ const ToolsSchema = new Schema({
 
 const toolsModel = mongoose.model('tools', ToolsSchema);
 
-export default {toolsModel, ToolsSchema};
+export {toolsModel, ToolsSchema};
