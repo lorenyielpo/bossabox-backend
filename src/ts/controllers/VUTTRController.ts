@@ -1,13 +1,16 @@
 import connect from '../repository/VUTTRRepository';
 import userModel from '../schemas/UserSchema';
-import { toolsModel } from '../schemas/ToolsSchema';
+import { toolsModel, ToolsSchema } from '../schemas/ToolsSchema';
 import bcrypt = require('bcryptjs');
 import jwt = require('jsonwebtoken');
 import Login from '../models/login';
 import User from '../models/User';
+import { ObjectId } from 'bson';
 
 
 connect();
+
+let idLogado: ObjectId;
 
 class VUTTRController {
     public static getAll() {
@@ -16,7 +19,7 @@ class VUTTRController {
         })
     }
 
-    public getByTag(tag: string) {
+    public static getByTag(tag: string) {
         return userModel.findOne({
             tools: {
                 tags: tag
@@ -41,31 +44,42 @@ class VUTTRController {
         return newUser.save();
     }
 
-    public async login(dataLogin: any) {
+    public static async login(dataLogin: any) {
         const user: any = await userModel.findOne({
             email: dataLogin.email
         })
 
-        const correctPassword = bcrypt.compareSync(dataLogin.password, user.password)
+        if (user) {
+            const correctPassword = bcrypt.compareSync(dataLogin.password, user.password);
 
-        if (user && correctPassword) {
-            const token = jwt.sign({
-                email: user.email,
-                id: user._id
-            },
-                <string>process.env.PRIVATE_KEY
-            )
-            return { auth: true, token}
+            if (correctPassword) {
+                const token = jwt.sign(
+                    {
+                    email: user.email,
+                    id: user._id
+                },
+                    <string>process.env.PRIVATE_KEY
+                )
+                idLogado = user._id;
+                return { auth: true, token }
+            } else {
+                throw new Error('Incorrect data')
+            }
         } else {
             throw new Error('Incorrect data')
         }
     }
 
-    public addTools() {
+    public static async addTools(tool: any) {
+        const user: any = await userModel.findById(idLogado);
+        const newTool = new toolsModel(tool);
+
+        user.tools.push(newTool);
+        return user.save()
 
     }
 
-    public deleteTools() {
+    public static deleteTools() {
 
     }
 }
