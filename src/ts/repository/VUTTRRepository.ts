@@ -1,11 +1,8 @@
-import dotenvSafe = require('dotenv-safe');
-dotenvSafe.load;
-
 import mongoose = require('mongoose');
 
-const MONGO_URL = <string> process.env.MONGODB_URI || 'mongodb://localhost:27017/vuttr';
+const MONGO_URL: string = <string> process.env.MONGODB_URI;
 
-function connect (){
+function connect (): void{
     mongoose.connect(<string> MONGO_URL,
         { useNewUrlParser: true},
         error => {

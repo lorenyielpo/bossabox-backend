@@ -1,3 +1,5 @@
+import dotenv = require('dotenv-safe');
+dotenv.config();
 import express = require('express');
 import {Response, Request} from 'express';
 import bodyParser = require('body-parser');

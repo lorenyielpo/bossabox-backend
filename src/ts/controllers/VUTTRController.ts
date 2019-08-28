@@ -1,4 +1,3 @@
-import dotenvSafe = require('dotenv-safe');
 import connect from '../repository/VUTTRRepository';
 import userModel from '../schemas/UserSchema';
 import { toolsModel } from '../schemas/ToolsSchema';
@@ -7,7 +6,7 @@ import jwt = require('jsonwebtoken');
 import Login from '../models/login';
 import User from '../models/User';
 
-dotenvSafe.load;
+
 connect();
 
 class VUTTRController {
@@ -39,7 +38,7 @@ class VUTTRController {
         dataUser.password = criptoPassword;
 
         const newUser = new userModel(dataUser);
-        return newUser;
+        return newUser.save();
     }
 
     public async login(dataLogin: any) {
