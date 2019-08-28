@@ -14,14 +14,11 @@ server.use(bodyParser());
 server.use(cors());
 server.use(bodyParser.json());
 
-// const controller = new VUTTRController;
-
 server.get('/',(request: Request, response: Response)=> {
     response.send('Hello').status(200);
 })
 
 server.get('/v1/vuttr', (request: Request, response: Response)=> {
-    // controller.getAll()
     VUTTRController.getAll()
     .then(vuttr => response.send(vuttr).status(200))
     .catch(error => {
