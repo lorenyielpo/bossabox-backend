@@ -8,12 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenvSafe = require("dotenv-safe");
 const VUTTRRepository_1 = require("../repository/VUTTRRepository");
 const UserSchema_1 = require("../schemas/UserSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-dotenvSafe.load;
 VUTTRRepository_1.default();
 class VUTTRController {
     static getAll() {
@@ -40,7 +38,7 @@ class VUTTRController {
             const criptoPassword = bcrypt.hashSync(dataUser.password, salt);
             dataUser.password = criptoPassword;
             const newUser = new UserSchema_1.default(dataUser);
-            return newUser;
+            return newUser.save();
         });
     }
     login(dataLogin) {
