@@ -41,7 +41,6 @@ server.post('/v1/user', (request, response) => {
         }
         else {
             response.sendStatus(500);
-            console.log(error);
         }
     });
 });
@@ -71,7 +70,6 @@ server.post('/v1/vuttr/login', (request, response) => {
         }
         else {
             response.sendStatus(500);
-            console.log(error);
         }
     });
 });
@@ -130,7 +128,6 @@ server.post('/v1/tools', (request, response) => {
             }
             else {
                 response.sendStatus(500);
-                console.log(error);
             }
         });
     }
@@ -170,5 +167,4 @@ server.delete('/v1/tools/:idTool', (request, response) => {
 });
 server.listen(PORT);
 console.info(`Rodando na porta ${PORT}`);
-exports.default = server;
 //# sourceMappingURL=server.js.map

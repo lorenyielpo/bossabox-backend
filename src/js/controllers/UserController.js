@@ -12,30 +12,32 @@ const VUTTRRepository_1 = require("../repository/VUTTRRepository");
 const UserSchema_1 = require("../schemas/UserSchema");
 const bcrypt = require("bcryptjs");
 VUTTRRepository_1.default();
-class UserController {
-    static getAllUser() {
-        return UserSchema_1.default.find((error, users) => {
-            return users;
-        });
-    }
-    static addUser(dataUser) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = yield UserSchema_1.default.findOne({
-                email: dataUser.email
-            });
-            if (user) {
-                throw new Error('This email already used');
-            }
-            const salt = bcrypt.genSaltSync(10);
-            const criptoPassword = bcrypt.hashSync(dataUser.password, salt);
-            dataUser.password = criptoPassword;
-            const newUser = new UserSchema_1.default(dataUser);
-            return newUser.save();
-        });
-    }
-    static deleteUser(id) {
-        return UserSchema_1.default.findByIdAndDelete(id);
-    }
+function getAllUser() {
+    return UserSchema_1.default.find((error, users) => {
+        return users;
+    });
 }
-exports.default = UserController;
+function addUser(dataUser) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield UserSchema_1.default.findOne({
+            email: dataUser.email
+        });
+        if (user) {
+            throw new Error('This email already used');
+        }
+        const salt = bcrypt.genSaltSync(10);
+        const criptoPassword = bcrypt.hashSync(dataUser.password, salt);
+        dataUser.password = criptoPassword;
+        const newUser = new UserSchema_1.default(dataUser);
+        return newUser.save();
+    });
+}
+function deleteUser(id) {
+    return UserSchema_1.default.findByIdAndDelete(id);
+}
+exports.default = {
+    getAllUser,
+    addUser,
+    deleteUser
+};
 //# sourceMappingURL=UserController.js.map

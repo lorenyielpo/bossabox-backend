@@ -13,28 +13,31 @@ const UserSchema_1 = require("../schemas/UserSchema");
 const ToolsSchema_1 = require("../schemas/ToolsSchema");
 const Login_1 = require("../helpers/Login");
 VUTTRRepository_1.default();
-class ToolsController {
-    static getByTag(tag) {
-        return ToolsSchema_1.default.find({
-            "tags": { $in: `${tag}` }
-        });
-    }
-    static addTools(tool) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = yield UserSchema_1.default.findById(Login_1.default.idLogado);
-            tool.author = user.username;
-            const newTool = new ToolsSchema_1.default(tool);
-            return newTool.save();
-        });
-    }
-    static getTools() {
-        return ToolsSchema_1.default.find((error, tools) => {
-            return tools;
-        });
-    }
-    static deleteTools(idTool) {
-        return ToolsSchema_1.default.findByIdAndDelete(idTool);
-    }
+function getByTag(tag) {
+    return ToolsSchema_1.default.find({
+        "tags": { $in: `${tag}` }
+    });
 }
-exports.default = ToolsController;
+function addTools(tool) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield UserSchema_1.default.findById(Login_1.default.idLogado);
+        tool.author = user.username;
+        const newTool = new ToolsSchema_1.default(tool);
+        return newTool.save();
+    });
+}
+function getTools() {
+    return ToolsSchema_1.default.find((error, tools) => {
+        return tools;
+    });
+}
+function deleteTools(idTool) {
+    return ToolsSchema_1.default.findByIdAndDelete(idTool);
+}
+exports.default = {
+    getByTag,
+    addTools,
+    getTools,
+    deleteTools
+};
 //# sourceMappingURL=ToolsController.js.map

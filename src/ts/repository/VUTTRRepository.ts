@@ -7,9 +7,9 @@ function connect (): void{
         { useNewUrlParser: true},
         error => {
             if(error) {
-                console.log('Falha ao conectar no mongo', error)
+                console.log('Falha ao conectar no mongo', error);
             } else {
-                console.log('Conectado no MongoDB')
+                console.log('Conectado no MongoDB');
             }
         });
 }

@@ -9,8 +9,6 @@ import Login from './helpers/Login';
 import UserController from './controllers/UserController';
 import ToolsController from './controllers/ToolsController';
 
-
-
 const PORT = parseInt(<string>process.env.PORT, 10) || 7000;
 
 const server = express();
@@ -30,7 +28,7 @@ server.get('/v1/user', (request: Request, response: Response) => {
             if (error.name == 'CastError') {
                 response.sendStatus(400);
             } else {
-                response.sendStatus(500)
+                response.sendStatus(500);
             }
         })
 })
@@ -46,7 +44,6 @@ server.post('/v1/user', (request: Request, response: Response) => {
                 response.sendStatus(400);
             } else {
                 response.sendStatus(500);
-                console.log(error)
             }
         })
 })
@@ -55,13 +52,13 @@ server.delete('/v1/user/:idUser', (request: Request, response: Response) => {
     const idUser: string = request.params.idUser;
     UserController.deleteUser(idUser)
         .then(() => {
-            response.sendStatus(200)
+            response.sendStatus(200);
         })
         .catch(error => {
             if (error.name == 'CastError') {
                 response.sendStatus(400);
             } else {
-                response.sendStatus(500)
+                response.sendStatus(500);
             }
         })
 })
@@ -73,10 +70,9 @@ server.post('/v1/vuttr/login', (request: Request, response: Response) => {
         })
         .catch(error => {
             if (error.name === 'ValidationError') {
-                response.sendStatus(400)
+                response.sendStatus(400);
             } else {
-                response.sendStatus(500)
-                console.log(error)
+                response.sendStatus(500);
             }
         })
 })
@@ -89,7 +85,7 @@ server.get('/v1/tools', (request: Request, response: Response) => {
                 if (error.name == 'CastError') {
                     response.sendStatus(400);
                 } else {
-                    response.sendStatus(500)
+                    response.sendStatus(500);
                 }
             })
     } else {
@@ -99,7 +95,7 @@ server.get('/v1/tools', (request: Request, response: Response) => {
                 if (error.name == 'CastError') {
                     response.sendStatus(400);
                 } else {
-                    response.sendStatus(500)
+                    response.sendStatus(500);
                 }
             })
     }
@@ -109,20 +105,20 @@ server.get('/v1/tools', (request: Request, response: Response) => {
 
 server.post('/v1/tools', (request: Request, response: Response) => {
 
-    const authHeader = request.get('authorization')
-    let auth = false
+    const authHeader = request.get('authorization');
+    let auth = false;
 
     if (authHeader) {
-        const token = authHeader.split(' ')[1]
+        const token = authHeader.split(' ')[1];
         jwt.verify(token, <string>process.env.PRIVATE_KEY, (error, decoded) => {
             if (error) {
-                response.send(403)
+                response.send(403);
             } else {
-                auth = true
+                auth = true;
             }
         })
     } else {
-        response.send(401)
+        response.send(401);
     }
 
     if (auth) {
@@ -137,7 +133,6 @@ server.post('/v1/tools', (request: Request, response: Response) => {
                     response.sendStatus(400);
                 } else {
                     response.sendStatus(500);
-                    console.log(error)
                 }
             })
     }
@@ -145,33 +140,33 @@ server.post('/v1/tools', (request: Request, response: Response) => {
 
 server.delete('/v1/tools/:idTool', (request: Request, response: Response) => {
 
-    const authHeader = request.get('authorization')
-    let auth = false
+    const authHeader = request.get('authorization');
+    let auth = false;
 
     if (authHeader) {
-        const token = authHeader.split(' ')[1]
+        const token = authHeader.split(' ')[1];
         jwt.verify(token, <string>process.env.PRIVATE_KEY, (error, decoded) => {
             if (error) {
-                response.send(403)
+                response.send(403);
             } else {
-                auth = true
+                auth = true;
             }
         })
     } else {
-        response.send(401)
+        response.send(401);
     }
 
     if (auth) {
         const idTool: string = request.params.idTool;
         ToolsController.deleteTools(idTool)
             .then(() => {
-                response.sendStatus(200)
+                response.sendStatus(200);
             })
             .catch(error => {
                 if (error.name == 'CastError') {
                     response.sendStatus(400);
                 } else {
-                    response.sendStatus(500)
+                    response.sendStatus(500);
                 }
             })
     }
@@ -179,6 +174,4 @@ server.delete('/v1/tools/:idTool', (request: Request, response: Response) => {
 
 
 server.listen(PORT);
-console.info(`Rodando na porta ${PORT}`)
-
-export default server;
+console.info(`Rodando na porta ${PORT}`);

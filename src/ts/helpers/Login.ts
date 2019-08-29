@@ -22,12 +22,12 @@ class Login {
                     <string>process.env.PRIVATE_KEY
                 )
                 this.idLogado = user._id;
-                return { auth: true, token }
+                return { auth: true, token };
             } else {
-                throw new Error('Incorrect data')
+                throw new Error('Incorrect data');
             }
         } else {
-            throw new Error('Incorrect data')
+            throw new Error('Incorrect data');
         }
     }
 }

@@ -5,32 +5,35 @@ import Login from '../helpers/Login';
 
 connect();
 
-class ToolsController {
-
-    static getByTag(tag: string) {
-        return toolsModel.find({
-            "tags": {$in: `${tag}`}
-        });
-    }
-
-    static async addTools(tool: any) {
-        const user: any = await userModel.findById(Login.idLogado);
-        
-        tool.author = user.username;
-        const newTool = new toolsModel(tool);
-
-        return newTool.save()
-    }
-
-    static getTools(){
-        return toolsModel.find((error, tools) => {
-            return tools;
-        })
-    }
-
-    static deleteTools(idTool: string) {
-        return toolsModel.findByIdAndDelete(idTool)
-    }
+function getByTag(tag: string) {
+    return toolsModel.find({
+        "tags": { $in: `${tag}` }
+    });
 }
 
-export default ToolsController;
+async function addTools(tool: any) {
+    const user: any = await userModel.findById(Login.idLogado);
+
+    tool.author = user.username;
+    const newTool = new toolsModel(tool);
+
+    return newTool.save();
+}
+
+function getTools() {
+    return toolsModel.find((error, tools) => {
+        return tools;
+    })
+}
+
+function deleteTools(idTool: string) {
+    return toolsModel.findByIdAndDelete(idTool);
+}
+
+
+export default {
+    getByTag,
+    addTools,
+    getTools,
+    deleteTools
+}
