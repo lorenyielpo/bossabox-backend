@@ -12,4 +12,4 @@ const ToolsSchema = new Schema({
 
 const toolsModel = mongoose.model('tools', ToolsSchema);
 
-export {toolsModel, ToolsSchema};
+export default toolsModel;

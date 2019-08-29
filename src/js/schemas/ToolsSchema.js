@@ -9,7 +9,6 @@ const ToolsSchema = new Schema({
     tags: { type: Array, required: true },
     author: { type: String }
 });
-exports.ToolsSchema = ToolsSchema;
 const toolsModel = mongoose.model('tools', ToolsSchema);
-exports.toolsModel = toolsModel;
+exports.default = toolsModel;
 //# sourceMappingURL=ToolsSchema.js.map

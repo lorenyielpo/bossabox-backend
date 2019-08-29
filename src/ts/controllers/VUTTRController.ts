@@ -1,6 +1,6 @@
 import connect from '../repository/VUTTRRepository';
 import userModel from '../schemas/UserSchema';
-import { toolsModel, ToolsSchema } from '../schemas/ToolsSchema';
+import toolsModel from '../schemas/ToolsSchema';
 import bcrypt = require('bcryptjs');
 import jwt = require('jsonwebtoken');
 import { ObjectId } from 'bson';

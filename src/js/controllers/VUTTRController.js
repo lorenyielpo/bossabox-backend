@@ -71,17 +71,17 @@ class VUTTRController {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield UserSchema_1.default.findById(idLogado);
             tool.author = user.username;
-            const newTool = new ToolsSchema_1.toolsModel(tool);
+            const newTool = new ToolsSchema_1.default(tool);
             return newTool.save();
         });
     }
     static getAllTools() {
-        return ToolsSchema_1.toolsModel.find((error, tools) => {
+        return ToolsSchema_1.default.find((error, tools) => {
             return tools;
         });
     }
     static deleteTools(idTool) {
-        return ToolsSchema_1.toolsModel.findByIdAndDelete(idTool);
+        return ToolsSchema_1.default.findByIdAndDelete(idTool);
     }
 }
 exports.default = VUTTRController;
