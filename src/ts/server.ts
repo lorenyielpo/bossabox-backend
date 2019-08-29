@@ -105,11 +105,6 @@ server.get('/v1/tools', (request: Request, response: Response) => {
 
 })
 
-
-// server.get('/v1/tools?:tag', (request: Request, response: Response) =>{
-
-//     
-
 server.delete('/v1/tools/:idTool', (request: Request, response: Response) => {
     const idTool: string = request.params.idTool;
     VUTTRController.deleteTools(idTool)
