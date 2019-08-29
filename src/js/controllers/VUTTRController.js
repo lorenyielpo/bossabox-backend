@@ -36,6 +36,9 @@ class VUTTRController {
             return newUser.save();
         });
     }
+    static deleteUser(id) {
+        return UserSchema_1.default.findByIdAndDelete(id);
+    }
     static login(dataLogin) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield UserSchema_1.default.findOne({

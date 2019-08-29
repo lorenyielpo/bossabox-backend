@@ -36,6 +36,10 @@ class VUTTRController {
         return newUser.save();
     }
 
+    public static deleteUser(id: string) {
+            return userModel.findByIdAndDelete(id)
+    }
+
     public static async login(dataLogin: any) {
         const user: any = await userModel.findOne({
             email: dataLogin.email

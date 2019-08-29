@@ -42,6 +42,21 @@ server.post('/v1/user', (request, response) => {
         }
     });
 });
+server.delete('/v1/user/:idUser', (request, response) => {
+    const idUser = request.params.idUser;
+    VUTTRController_1.default.deleteUser(idUser)
+        .then(() => {
+        response.sendStatus(200);
+    })
+        .catch(error => {
+        if (error.name == 'CastError') {
+            response.sendStatus(400);
+        }
+        else {
+            response.sendStatus(500);
+        }
+    });
+});
 server.post('/v1/vuttr/login', (request, response) => {
     VUTTRController_1.default.login(request.body)
         .then(login => {
