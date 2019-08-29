@@ -1,5 +1,4 @@
 import mongoose = require('mongoose');
-import {ToolsSchema} from '../schemas/ToolsSchema'
 
 const Schema = mongoose.Schema;
 
