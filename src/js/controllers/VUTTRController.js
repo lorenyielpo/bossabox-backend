@@ -16,16 +16,9 @@ const jwt = require("jsonwebtoken");
 VUTTRRepository_1.default();
 let idLogado;
 class VUTTRController {
-    static getAll() {
+    static getAllUser() {
         return UserSchema_1.default.find((error, users) => {
             return users;
-        });
-    }
-    static getByTag(tag) {
-        return UserSchema_1.default.findOne({
-            tools: {
-                tags: tag
-            }
         });
     }
     static addUser(dataUser) {
@@ -67,15 +60,28 @@ class VUTTRController {
             }
         });
     }
+    static getByTag(tag) {
+        return UserSchema_1.default.findOne({
+            tools: {
+                tags: tag
+            }
+        });
+    }
     static addTools(tool) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield UserSchema_1.default.findById(idLogado);
+            tool.author = user.username;
             const newTool = new ToolsSchema_1.toolsModel(tool);
-            user.tools.push(newTool);
-            return user.save();
+            return newTool.save();
         });
     }
-    static deleteTools() {
+    static getAllTools() {
+        return ToolsSchema_1.toolsModel.find((error, tools) => {
+            return tools;
+        });
+    }
+    static deleteTools(idTool) {
+        return ToolsSchema_1.toolsModel.findByIdAndDelete(idTool);
     }
 }
 exports.default = VUTTRController;

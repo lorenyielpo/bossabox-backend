@@ -13,17 +13,11 @@ connect();
 let idLogado: ObjectId;
 
 class VUTTRController {
-    public static getAll() {
+    
+
+    public static getAllUser() {
         return userModel.find((error, users) => {
             return users;
-        })
-    }
-
-    public static getByTag(tag: string) {
-        return userModel.findOne({
-            tools: {
-                tags: tag
-            }
         })
     }
 
@@ -70,17 +64,31 @@ class VUTTRController {
         }
     }
 
-    public static async addTools(tool: any) {
-        const user: any = await userModel.findById(idLogado);
-        const newTool = new toolsModel(tool);
-
-        user.tools.push(newTool);
-        return user.save()
-
+    public static getByTag(tag: string) {
+        return userModel.findOne({
+            tools: {
+                tags: tag
+            }
+        })
     }
 
-    public static deleteTools() {
+    public static async addTools(tool: any) {
+        const user: any = await userModel.findById(idLogado);
+        
+        tool.author = user.username;
+        const newTool = new toolsModel(tool);
+        
+        return newTool.save()
+    }
 
+    public static getAllTools(){
+        return toolsModel.find((error, tools) => {
+            return tools;
+        })
+    }
+
+    public static deleteTools(idTool: string) {
+        return toolsModel.findByIdAndDelete(idTool)
     }
 }
 
