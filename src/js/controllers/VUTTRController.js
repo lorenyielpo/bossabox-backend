@@ -61,10 +61,8 @@ class VUTTRController {
         });
     }
     static getByTag(tag) {
-        return UserSchema_1.default.findOne({
-            tools: {
-                tags: tag
-            }
+        return ToolsSchema_1.default.find({
+            "tags": { $in: `${tag}` }
         });
     }
     static addTools(tool) {

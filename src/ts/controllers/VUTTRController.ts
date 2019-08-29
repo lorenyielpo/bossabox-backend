@@ -63,11 +63,9 @@ class VUTTRController {
     }
 
     public static getByTag(tag: string) {
-        return userModel.findOne({
-            tools: {
-                tags: tag
-            }
-        })
+        return toolsModel.find({
+            "tags": {$in: `${tag}`}
+        });
     }
 
     public static async addTools(tool: any) {
