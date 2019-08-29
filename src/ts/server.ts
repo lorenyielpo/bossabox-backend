@@ -49,22 +49,22 @@ server.post('/v1/user', (request: Request, response: Response) => {
         })
 })
 
-server.post('/v1/vuttr/login', (request: Request, response: Response) =>{
+server.post('/v1/vuttr/login', (request: Request, response: Response) => {
     VUTTRController.login(request.body)
-    .then(login => {
-        response.send(login).status(200);
-    })
-    .catch(error => {
-        if (error.name === 'ValidationError') {
-            response.sendStatus(400)
-        } else {
-            response.sendStatus(500)
-            console.log(error)
-        }
-    })
+        .then(login => {
+            response.send(login).status(200);
+        })
+        .catch(error => {
+            if (error.name === 'ValidationError') {
+                response.sendStatus(400)
+            } else {
+                response.sendStatus(500)
+                console.log(error)
+            }
+        })
 })
 
-server.post('/v1/tools', (request: Request, response: Response) =>{
+server.post('/v1/tools', (request: Request, response: Response) => {
     VUTTRController.addTools(request.body)
         .then(tools => {
             const _id = tools._id;
@@ -80,9 +80,42 @@ server.post('/v1/tools', (request: Request, response: Response) =>{
         })
 })
 
-server.get('/v1/tools', (request: Request, response: Response) =>{
-    VUTTRController.getAllTools()
-    .then(tools => response.send(tools).status(200))
+server.get('/v1/tools', (request: Request, response: Response) => {
+    const tag = request.query.tag;
+    if (!tag) {
+        VUTTRController.getAllTools()
+            .then(tools => response.send(tools).status(200)).catch(error => {
+                if (error.name == 'CastError') {
+                    response.sendStatus(400);
+                } else {
+                    response.sendStatus(500)
+                }
+            })
+    } else {
+        VUTTRController.getByTag(tag)
+            .then(tools => response.send(tools).status(200))
+            .catch(error => {
+                if (error.name == 'CastError') {
+                    response.sendStatus(400);
+                } else {
+                    response.sendStatus(500)
+                }
+            })
+    }
+
+})
+
+
+// server.get('/v1/tools?:tag', (request: Request, response: Response) =>{
+
+//     
+
+server.delete('/v1/tools/:idTool', (request: Request, response: Response) => {
+    const idTool: string = request.params.idTool;
+    VUTTRController.deleteTools(idTool)
+        .then(() => {
+            response.sendStatus(200)
+        })
         .catch(error => {
             if (error.name == 'CastError') {
                 response.sendStatus(400);
@@ -90,21 +123,6 @@ server.get('/v1/tools', (request: Request, response: Response) =>{
                 response.sendStatus(500)
             }
         })
-})
-
-server.delete('/v1/tools/:idTool', (request: Request, response: Response) =>{
-    const idTool: string= request.params.idTool;
-    VUTTRController.deleteTools(idTool)
-    .then(() => {
-        response.sendStatus(200)
-    })
-    .catch(error => {
-        if (error.name == 'CastError') {
-            response.sendStatus(400);
-        } else {
-            response.sendStatus(500)
-        }
-    })
 })
 
 

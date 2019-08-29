@@ -74,16 +74,30 @@ server.post('/v1/tools', (request, response) => {
     });
 });
 server.get('/v1/tools', (request, response) => {
-    VUTTRController_1.default.getAllTools()
-        .then(tools => response.send(tools).status(200))
-        .catch(error => {
-        if (error.name == 'CastError') {
-            response.sendStatus(400);
-        }
-        else {
-            response.sendStatus(500);
-        }
-    });
+    const tag = request.query.tag;
+    if (!tag) {
+        VUTTRController_1.default.getAllTools()
+            .then(tools => response.send(tools).status(200)).catch(error => {
+            if (error.name == 'CastError') {
+                response.sendStatus(400);
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+    }
+    else {
+        VUTTRController_1.default.getByTag(tag)
+            .then(tools => response.send(tools).status(200))
+            .catch(error => {
+            if (error.name == 'CastError') {
+                response.sendStatus(400);
+            }
+            else {
+                response.sendStatus(500);
+            }
+        });
+    }
 });
 server.delete('/v1/tools/:idTool', (request, response) => {
     const idTool = request.params.idTool;
