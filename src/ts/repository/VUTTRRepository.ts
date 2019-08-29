@@ -1,9 +1,11 @@
 import mongoose = require('mongoose');
 
-const MONGO_URL: string = <string> process.env.MONGODB_URI;
+class VUTTRRepository{
+    
+    static MONGO_URL: string = <string> process.env.MONGODB_URI;
 
-function connect (): void{
-    mongoose.connect(<string> MONGO_URL,
+    static connect (): void{
+    mongoose.connect(<string> this.MONGO_URL,
         { useNewUrlParser: true},
         error => {
             if(error) {
@@ -11,7 +13,10 @@ function connect (): void{
             } else {
                 console.log('Conectado no MongoDB');
             }
-        });
+        }); 
+    }
 }
 
-export default connect;
+
+
+export default VUTTRRepository;
