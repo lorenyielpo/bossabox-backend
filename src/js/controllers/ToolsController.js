@@ -12,7 +12,7 @@ const VUTTRRepository_1 = require("../repository/VUTTRRepository");
 const UserSchema_1 = require("../schemas/UserSchema");
 const ToolsSchema_1 = require("../schemas/ToolsSchema");
 const Login_1 = require("../helpers/Login");
-VUTTRRepository_1.default();
+VUTTRRepository_1.default.connect();
 function getByTag(tag) {
     return ToolsSchema_1.default.find({
         "tags": { $in: `${tag}` }

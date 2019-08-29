@@ -1,9 +1,9 @@
-import connect from '../repository/VUTTRRepository';
+import VUTTRRepository from '../repository/VUTTRRepository';
 import userModel from '../schemas/UserSchema';
 import toolsModel from '../schemas/ToolsSchema';
 import Login from '../helpers/Login';
 
-connect();
+VUTTRRepository.connect();
 
 function getByTag(tag: string) {
     return toolsModel.find({

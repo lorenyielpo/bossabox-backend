@@ -1,8 +1,8 @@
-import connect from '../repository/VUTTRRepository';
+import VUTTRRepository from '../repository/VUTTRRepository';
 import userModel from '../schemas/UserSchema';
 import bcrypt = require('bcryptjs');
 
-connect();
+VUTTRRepository.connect();
 
 function getAllUser() {
     return userModel.find((error, users) => {

@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const VUTTRRepository_1 = require("../repository/VUTTRRepository");
 const UserSchema_1 = require("../schemas/UserSchema");
 const bcrypt = require("bcryptjs");
-VUTTRRepository_1.default();
+VUTTRRepository_1.default.connect();
 function getAllUser() {
     return UserSchema_1.default.find((error, users) => {
         return users;
