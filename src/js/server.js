@@ -48,7 +48,7 @@ server.delete('/v1/user/:idUser', (request, response) => {
     const idUser = request.params.idUser;
     UserController_1.default.deleteUser(idUser)
         .then(() => {
-        response.sendStatus(200);
+        response.sendStatus(204);
     })
         .catch(error => {
         if (error.name == 'CastError') {
@@ -59,7 +59,7 @@ server.delete('/v1/user/:idUser', (request, response) => {
         }
     });
 });
-server.post('/v1/vuttr/login', (request, response) => {
+server.post('/v1/login', (request, response) => {
     Login_1.default.login(request.body)
         .then(login => {
         response.send(login).status(200);
@@ -77,7 +77,8 @@ server.get('/v1/tools', (request, response) => {
     const tag = request.query.tag;
     if (!tag) {
         ToolsController_1.default.getTools()
-            .then(tools => response.send(tools).status(200)).catch(error => {
+            .then(tools => response.send(tools).status(200))
+            .catch(error => {
             if (error.name == 'CastError') {
                 response.sendStatus(400);
             }
@@ -118,10 +119,7 @@ server.post('/v1/tools', (request, response) => {
     }
     if (auth) {
         ToolsController_1.default.addTools(request.body)
-            .then(tools => {
-            const _id = tools._id;
-            response.send(_id).status(201);
-        })
+            .then(tools => response.send(tools).status(201))
             .catch(error => {
             if (error.name === 'ValidationError') {
                 response.sendStatus(400);
@@ -153,7 +151,7 @@ server.delete('/v1/tools/:idTool', (request, response) => {
         const idTool = request.params.idTool;
         ToolsController_1.default.deleteTools(idTool)
             .then(() => {
-            response.sendStatus(200);
+            response.sendStatus(204);
         })
             .catch(error => {
             if (error.name == 'CastError') {

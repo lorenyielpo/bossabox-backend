@@ -52,7 +52,7 @@ server.delete('/v1/user/:idUser', (request: Request, response: Response) => {
     const idUser: string = request.params.idUser;
     UserController.deleteUser(idUser)
         .then(() => {
-            response.sendStatus(200);
+            response.sendStatus(204);
         })
         .catch(error => {
             if (error.name == 'CastError') {
@@ -63,7 +63,7 @@ server.delete('/v1/user/:idUser', (request: Request, response: Response) => {
         })
 })
 
-server.post('/v1/vuttr/login', (request: Request, response: Response) => {
+server.post('/v1/login', (request: Request, response: Response) => {
     Login.login(request.body)
         .then(login => {
             response.send(login).status(200);
@@ -81,7 +81,8 @@ server.get('/v1/tools', (request: Request, response: Response) => {
     const tag = request.query.tag;
     if (!tag) {
         ToolsController.getTools()
-            .then(tools => response.send(tools).status(200)).catch(error => {
+            .then(tools => response.send(tools).status(200))
+            .catch(error => {
                 if (error.name == 'CastError') {
                     response.sendStatus(400);
                 } else {
@@ -116,7 +117,7 @@ server.post('/v1/tools', (request: Request, response: Response) => {
             } else {
                 auth = true;
             }
-        })
+        })        
     } else {
         response.send(401);
     }
@@ -124,10 +125,7 @@ server.post('/v1/tools', (request: Request, response: Response) => {
     if (auth) {
 
         ToolsController.addTools(request.body)
-            .then(tools => {
-                const _id = tools._id;
-                response.send(_id).status(201);
-            })
+            .then(tools => response.send(tools).status(201))
             .catch(error => {
                 if (error.name === 'ValidationError') {
                     response.sendStatus(400);
@@ -160,7 +158,7 @@ server.delete('/v1/tools/:idTool', (request: Request, response: Response) => {
         const idTool: string = request.params.idTool;
         ToolsController.deleteTools(idTool)
             .then(() => {
-                response.sendStatus(200);
+                response.sendStatus(204);
             })
             .catch(error => {
                 if (error.name == 'CastError') {
