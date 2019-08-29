@@ -3,8 +3,6 @@ import userModel from '../schemas/UserSchema';
 import { toolsModel, ToolsSchema } from '../schemas/ToolsSchema';
 import bcrypt = require('bcryptjs');
 import jwt = require('jsonwebtoken');
-import Login from '../models/login';
-import User from '../models/User';
 import { ObjectId } from 'bson';
 
 
@@ -77,7 +75,7 @@ class VUTTRController {
         
         tool.author = user.username;
         const newTool = new toolsModel(tool);
-        
+
         return newTool.save()
     }
 
