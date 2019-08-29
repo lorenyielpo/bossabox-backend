@@ -8,6 +8,6 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     username: { type: String, required: true },
 });
-const userModel = mongoose.model('user', UserSchema);
+const userModel = mongoose.model('user', UserSchema, 'user');
 exports.default = userModel;
 //# sourceMappingURL=UserSchema.js.map
