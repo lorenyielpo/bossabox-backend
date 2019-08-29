@@ -7,6 +7,7 @@ const ToolsSchema = new Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
     tags: {type: Array, required: true},
+    author: {type: String}
 });
 
 const toolsModel = mongoose.model('tools', ToolsSchema);
