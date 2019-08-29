@@ -14,8 +14,8 @@ server.use(bodyParser.json());
 server.get('/', (request, response) => {
     response.send('Hello').status(200);
 });
-server.get('/v1/vuttr', (request, response) => {
-    VUTTRController_1.default.getAll()
+server.get('/v1/user', (request, response) => {
+    VUTTRController_1.default.getAllUser()
         .then(vuttr => response.send(vuttr).status(200))
         .catch(error => {
         if (error.name == 'CastError') {
@@ -42,13 +42,6 @@ server.post('/v1/user', (request, response) => {
         }
     });
 });
-server.post('/v1/tools', (request, response) => {
-    VUTTRController_1.default.addTools(request.body)
-        .then(user => {
-        const toolId = user.tools._id;
-        response.send(toolId);
-    });
-});
 server.post('/v1/vuttr/login', (request, response) => {
     VUTTRController_1.default.login(request.body)
         .then(login => {
@@ -61,6 +54,49 @@ server.post('/v1/vuttr/login', (request, response) => {
         else {
             response.sendStatus(500);
             console.log(error);
+        }
+    });
+});
+server.post('/v1/tools', (request, response) => {
+    VUTTRController_1.default.addTools(request.body)
+        .then(tools => {
+        const _id = tools._id;
+        response.send(_id).status(201);
+    })
+        .catch(error => {
+        if (error.name === 'ValidationError') {
+            response.sendStatus(400);
+        }
+        else {
+            response.sendStatus(500);
+            console.log(error);
+        }
+    });
+});
+server.get('/v1/tools', (request, response) => {
+    VUTTRController_1.default.getAllTools()
+        .then(tools => response.send(tools).status(200))
+        .catch(error => {
+        if (error.name == 'CastError') {
+            response.sendStatus(400);
+        }
+        else {
+            response.sendStatus(500);
+        }
+    });
+});
+server.delete('/v1/tools/:idTool', (request, response) => {
+    const idTool = request.params.idTool;
+    VUTTRController_1.default.deleteTools(idTool)
+        .then(() => {
+        response.sendStatus(200);
+    })
+        .catch(error => {
+        if (error.name == 'CastError') {
+            response.sendStatus(400);
+        }
+        else {
+            response.sendStatus(500);
         }
     });
 });

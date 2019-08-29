@@ -6,6 +6,7 @@ import cors = require('cors');
 import { Response, Request } from 'express';
 import VUTTRController from './controllers/VUTTRController';
 import jwt = require('jsonwebtoken');
+import { ObjectId } from 'bson';
 
 
 const PORT = parseInt(<string>process.env.PORT, 10) || 7000;
@@ -20,8 +21,8 @@ server.get('/', (request: Request, response: Response) => {
     response.send('Hello').status(200);
 })
 
-server.get('/v1/vuttr', (request: Request, response: Response) => {
-    VUTTRController.getAll()
+server.get('/v1/user', (request: Request, response: Response) => {
+    VUTTRController.getAllUser()
         .then(vuttr => response.send(vuttr).status(200))
         .catch(error => {
             if (error.name == 'CastError') {
@@ -48,14 +49,6 @@ server.post('/v1/user', (request: Request, response: Response) => {
         })
 })
 
-server.post('/v1/tools', (request: Request, response: Response) =>{
-    VUTTRController.addTools(request.body)
-    .then(user => {
-        const toolId = user.tools._id;
-        response.send(toolId) 
-    })
-})
-
 server.post('/v1/vuttr/login', (request: Request, response: Response) =>{
     VUTTRController.login(request.body)
     .then(login => {
@@ -71,7 +64,48 @@ server.post('/v1/vuttr/login', (request: Request, response: Response) =>{
     })
 })
 
+server.post('/v1/tools', (request: Request, response: Response) =>{
+    VUTTRController.addTools(request.body)
+        .then(tools => {
+            const _id = tools._id;
+            response.send(_id).status(201);
+        })
+        .catch(error => {
+            if (error.name === 'ValidationError') {
+                response.sendStatus(400);
+            } else {
+                response.sendStatus(500);
+                console.log(error)
+            }
+        })
+})
 
+server.get('/v1/tools', (request: Request, response: Response) =>{
+    VUTTRController.getAllTools()
+    .then(tools => response.send(tools).status(200))
+        .catch(error => {
+            if (error.name == 'CastError') {
+                response.sendStatus(400);
+            } else {
+                response.sendStatus(500)
+            }
+        })
+})
+
+server.delete('/v1/tools/:idTool', (request: Request, response: Response) =>{
+    const idTool: string= request.params.idTool;
+    VUTTRController.deleteTools(idTool)
+    .then(() => {
+        response.sendStatus(200)
+    })
+    .catch(error => {
+        if (error.name == 'CastError') {
+            response.sendStatus(400);
+        } else {
+            response.sendStatus(500)
+        }
+    })
+})
 
 
 server.listen(PORT);
