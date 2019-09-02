@@ -15,4 +15,4 @@ const rotas = new Routes_1.default(server);
 rotas.router();
 server.listen(PORT);
 console.info(`Rodando na porta ${PORT}`);
-//# sourceMappingURL=Server.js.map
+//# sourceMappingURL=server.js.map
