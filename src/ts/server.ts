@@ -5,7 +5,7 @@ import express = require('express');
 import cors = require('cors');
 import Routes from './Routes';
 
-const PORT= parseInt(<string>process.env.PORT, 10) || 7000;
+const PORT= parseInt(<string>process.env.PORT, 10) || 3000;
 
 const server = express();
 server.use(bodyParser());
