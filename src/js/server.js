@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
 const Routes_1 = require("./Routes");
-const PORT = parseInt(process.env.PORT, 10) || 7000;
+const PORT = parseInt(process.env.PORT, 10) || 3000;
 const server = express();
 server.use(bodyParser());
 server.use(cors());
