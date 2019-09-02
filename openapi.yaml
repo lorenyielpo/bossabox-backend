@@ -1,0 +1,324 @@
+openapi: 3.0.1
+info:
+  title: Very Useful Tools to Remember
+  description: A aplicação é um simples repositório para gerenciar ferramentas com
+    seus respectivos nomes, links, descrições e tags
+  termsOfService: http://localhost:3000/v1/termo-uso
+  contact:
+    name: suporte
+    url: http://localhost:3000//VUTTR-api/v1/suporte
+    email: lorenyielpo@gmail.com
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: http://localhost:3000/VUTTR-api/v1
+- url: https://localhost:3000/VUTTR-api/v1
+  
+tags: 
+  - name: User
+  - name: Tools
+
+paths:
+  /tools:
+    get:
+      tags:
+        - Tools
+      summary: Lista ferramentas
+      description: Lista todas as ferramentas
+      parameters:
+      - name: tag
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tools'
+        400:
+          description: Bad Request
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+    post:
+      tags:
+        - Tools
+      summary: cadastra ferramentas
+      description: Cadastra uma nova ferramentas
+      security: 
+        - BasicAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTool'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tools'
+        400:
+          description: Bad Request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+  /tools/{id}:
+    delete:
+      tags:
+        - Tools
+      summary: Excluir uma ferramenta
+      description: Excluir uma ferramenta pela id
+      security: 
+        - BasicAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        required: true
+      responses:
+        204:
+          description: No content
+          content: {}
+        400:
+          description: Bad Request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+          
+          
+  /user:
+    get:
+      tags:
+        - User
+      summary: Listar usuários
+      description: Listar todos os usuários
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad Request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+    post:
+      tags:
+        - User
+      summary: cadastra usuário
+      description: Cadastra um novo usuário
+      security: 
+        - BasicAuth: []
+      parameters: 
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+        required: true
+      responses:
+        204:
+          description: No content
+          content: {}
+        400:
+          description: Bad Request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+    delete:
+      tags:
+        - User
+      summary: Excluir um usuário
+      description: Excluir um ususário pela id
+      security: 
+        - BasicAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        required: true
+      responses:
+        204:
+          description: No content
+          content: {}
+        400:
+          description: Bad Request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+  
+  /login:
+    post:
+      summary: Login de usuário
+      description: Loga os usuários na aplicação
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auth'
+        400:
+          description: Bad Request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+    
+components:
+  schemas:
+    Tools:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "5"
+        title:
+          type: string
+          example: hotel
+        link:
+          type: string
+          example: https://github.com/typicode/hotel
+        description:
+          type: string
+          example: Local app manager. Start apps within your browser, developer tool
+            with local .localhost domain and https out of the box.
+        tags:
+          type: array
+          example:
+          - node
+          - organizing
+          - webapps
+          - domain
+          - developer
+          - https
+          - proxy
+          items:
+            type: string
+        author:
+          type: string
+          example: mariaa
+    
+    NewTool:
+      type: object
+      properties:
+        title:
+          type: string
+          example: hotel
+        link:
+          type: string
+          example: https://github.com/typicode/hotel
+        description:
+          type: string
+          example: Local app manager. Start apps within your browser, developer tool
+            with local .localhost domain and https out of the box.
+        tags:
+          type: array
+          example:
+          - node
+          - organizing
+          - webapps
+          - domain
+          - developer
+          - https
+          - proxy
+          items:
+            type: string
+    
+    NewUser:
+      type: object
+      properties:
+        email:
+          type: string
+          example: maria@email.com
+        password:
+          type: string
+          example: senha1234
+        username:
+          type: string
+          example: mariaa
+          
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "5"
+        email:
+          type: string
+          example: maria@email.com
+        password:
+          type: string
+          example: senha1234
+        username:
+          type: string
+          example: mariaa
+          
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: maria@email.com
+        password:
+          type: string
+          example: senha1234
+          
+    Auth:
+      type: object
+      properties:
+        auth:
+          type: boolean
+          example: true
+        token:
+          type: string
+          example: jhhilkjlkjuhjjh7879
+
+    
